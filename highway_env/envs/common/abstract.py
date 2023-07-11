@@ -208,7 +208,7 @@ class AbstractEnv(gym.Env):
         info = self._info(obs, action=self.action_space.sample())
         if self.render_mode == 'human':
             self.render()
-        return obs, info
+        return obs.flatten(), info
 
     def _reset(self) -> None:
         """
@@ -242,7 +242,7 @@ class AbstractEnv(gym.Env):
         if self.render_mode == 'human':
             self.render()
 
-        return obs, reward, terminated, truncated, info
+        return obs.flatten(), reward, terminated, truncated, info
 
     def _simulate(self, action: Optional[Action] = None) -> None:
         """Perform several steps of simulation with constant action."""

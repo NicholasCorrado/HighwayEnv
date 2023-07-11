@@ -26,7 +26,7 @@ class IntersectionEnv(AbstractEnv):
         config.update({
             "observation": {
                 "type": "Kinematics",
-                "vehicles_count": 15,
+                "vehicles_count": 6,
                 "features": ["presence", "x", "y", "vx", "vy", "cos_h", "sin_h"],
                 "features_range": {
                     "x": [-100, 100],
@@ -39,26 +39,27 @@ class IntersectionEnv(AbstractEnv):
                 "observe_intentions": False
             },
             "action": {
-                "type": "DiscreteMetaAction",
+                "type": "ContinuousAction",
+                # "speed_range": [25,40],
+                # "steering_range": [-np.pi / 16, np.pi / 16],
                 "longitudinal": True,
                 "lateral": False,
-                "target_speeds": [0, 4.5, 9]
             },
             "duration": 13,  # [s]
-            "destination": "o1",
+            "destination": "o3",
             "controlled_vehicles": 1,
-            "initial_vehicle_count": 10,
-            "spawn_probability": 0.6,
+            "initial_vehicle_count": 15,
+            "spawn_probability": 1,
             "screen_width": 600,
             "screen_height": 600,
             "centering_position": [0.5, 0.6],
             "scaling": 5.5 * 1.3,
             "collision_reward": -5,
-            "high_speed_reward": 1,
+            "high_speed_reward": 0.1,
             "arrived_reward": 1,
-            "reward_speed_range": [7.0, 9.0],
+            "reward_speed_range": [0, 9.0],
             "normalize_reward": False,
-            "offroad_terminal": False
+            "offroad_terminal": True
         })
         return config
 
