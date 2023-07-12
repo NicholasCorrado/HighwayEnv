@@ -26,7 +26,7 @@ class IntersectionEnv(AbstractEnv):
         config.update({
             "observation": {
                 "type": "Kinematics",
-                "vehicles_count": 6,
+                "vehicles_count": 8,
                 "features": ["presence", "x", "y", "vx", "vy", "cos_h", "sin_h"],
                 "features_range": {
                     "x": [-100, 100],
@@ -48,14 +48,14 @@ class IntersectionEnv(AbstractEnv):
             "duration": 13,  # [s]
             "destination": "o3",
             "controlled_vehicles": 1,
-            "initial_vehicle_count": 15,
+            "initial_vehicle_count": 10,
             "spawn_probability": 1,
             "screen_width": 600,
             "screen_height": 600,
             "centering_position": [0.5, 0.6],
             "scaling": 5.5 * 1.3,
             "collision_reward": -5,
-            "high_speed_reward": 0.1,
+            "high_speed_reward": 0.2,
             "arrived_reward": 1,
             "reward_speed_range": [0, 9.0],
             "normalize_reward": False,
