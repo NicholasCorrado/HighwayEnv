@@ -29,7 +29,7 @@ class HighwayEnv(AbstractEnv):
                 "type": "Kinematics",
                 # "features": ["presence", "x", "y", "vx", "vy", "cos_h", "sin_h"],
                 "vehicles_count": 8,
-                'absolute': True
+                'absolute': False
             },
             "action": {
                 "type": "ContinuousAction",
@@ -45,14 +45,14 @@ class HighwayEnv(AbstractEnv):
             "initial_lane_id": None,
             "duration": 30,  # [s]
             "ego_spacing": 2,
-            "vehicles_density": 2,
+            "vehicles_density": 1,
             "collision_reward": -1,  # The reward received when colliding with a vehicle.
             "right_lane_reward": 0.1,  # The reward received when driving on the right-most lanes, linearly mapped to
             # zero for other lanes.
-            "high_speed_reward": 0,  # The reward received when driving at full speed, linearly mapped to zero for
+            "high_speed_reward": 0.4,  # The reward received when driving at full speed, linearly mapped to zero for
             # lower speeds according to config["reward_speed_range"].
             "lane_change_reward": 0,  # The reward received at each lane change action.
-            "reward_speed_range": [29, 30],
+            "reward_speed_range": [20,30],
             "normalize_reward": False,
             "offroad_terminal": True
         })
