@@ -98,6 +98,8 @@ class RoadObject(ABC):
             if not other.solid:
                 other.hit = True
 
+        return intersecting
+
     def _is_colliding(self, other, dt):
         # Fast spherical pre-check
         if np.linalg.norm(other.position - self.position) > (self.diagonal + other.diagonal) / 2 + self.speed * dt:

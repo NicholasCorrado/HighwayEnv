@@ -36,11 +36,11 @@ class HighwayEnv(AbstractEnv):
                 # "speed_range": [25,40],
                 # "target_speeds": [30, 40],
                 "steering_range": [-np.pi / 6, np.pi / 6],
-                "longitudinal": False,
+                "longitudinal": True,
                 "lateral": True,
             },
             "lanes_count": 4,
-            "vehicles_count": 7,
+            "vehicles_count": 0,
             "controlled_vehicles": 1,
             "initial_lane_id": None,
             "duration": 30,  # [s]

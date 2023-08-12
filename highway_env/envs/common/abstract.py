@@ -410,6 +410,35 @@ class AbstractEnv(gym.Env):
                 setattr(result, k, None)
         return result
 
+    def set_state(self, obs) -> None:
+        n = len(self.road.vehicles)
+        obs = obs.reshape(n,-1)
+
+        # y = utils.lmap(obs[0, 2], [0, +1], self.observation_type.features_range['y'])
+        # y = -2
+        y_old = self.controlled_vehicles[0].position[1]
+
+        # x = utils.lmap(obs[0, 1], [-1, 1], [self.features_range["x"][0], self.features_range["x"][1]])
+        # y = utils.lmap(obs[0, 2], [-1, 1], [self.features_range["y"][0], self.features_range["y"][1]])
+
+        # self.controlled_vehicles[0].position[0] = x
+        # self.controlled_vehicles[0].position[1] = y
+
+        for i in range(1, n):
+            vehicle = self.road.vehicles[i]
+            # vehicle = self.road.vehicles[i]
+            # vehicle.position[1] = - y + y_old
+
+        # origin = self.controlled_vehicles[0].position
+        # self.controlled_vehicles[0].position[1] = -10
+        # x 5.25
+        # y 1.92
+        # self.road.vehicles[1].position[0] = origin[0] + np.random.uniform(4.2, 5.2)
+        # self.road.vehicles[1].position[1] = np.random.uniform(-1.92, 1.92)
+
+
+        # for v in self.road.vehicles:
+        #     print(v.to_dict(self.controlled_vehicles[0]))
 
 class MultiAgentWrapper(Wrapper):
     def step(self, action):
