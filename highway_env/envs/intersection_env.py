@@ -44,12 +44,12 @@ class IntersectionEnv(AbstractEnv):
                 "lateral": False,
                 "target_speeds": [0, 4.5, 9]
             },
-            "action": {
-                "type": "ContinuousAction",
-                "longitudinal": True,
-                "lateral": True,
-                "target_speeds": [0, 4.5, 9]
-            },
+            # "action": {
+            #     "type": "ContinuousAction",
+            #     "longitudinal": True,
+            #     "lateral": True,
+            #     "target_speeds": [0, 4.5, 9]
+            # },
 
             "duration": 13,  # [s]
             "destination": "o1",
