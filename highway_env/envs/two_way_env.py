@@ -25,14 +25,11 @@ class TwoWayEnv(AbstractEnv):
         config = super().default_config()
         config.update({
             "observation": {
-                "type": "Kinematics",
+                "type": "TimeToCollision",
                 "horizon": 5
             },
             "action": {
-                "type": "ContinuousAction",
-                # "steering_range": [-np.pi / 6, np.pi / 6],
-                # "longitudinal": False,
-                # "lateral": True,
+                "type": "DiscreteMetaAction",
             },
             "collision_reward": 0,
             "left_lane_constraint": 1,

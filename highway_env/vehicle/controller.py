@@ -100,8 +100,8 @@ class ControlledVehicle(Vehicle):
             if self.road.network.get_lane(target_lane_index).is_reachable_from(self.position):
                 self.target_lane_index = target_lane_index
 
-        action = {"steering": self.steering_control(self.target_lane_index),
-                  "acceleration": self.speed_control(self.target_speed)}
+        action = {"steering": self.steering_control(self.target_lane_index) + np.random.uniform(-0.05, +0.05),
+                  "acceleration": self.speed_control(self.target_speed) + np.random.uniform(-0.05, +0.05)}
         action['steering'] = np.clip(action['steering'], -self.MAX_STEERING_ANGLE, self.MAX_STEERING_ANGLE)
         super().act(action)
 

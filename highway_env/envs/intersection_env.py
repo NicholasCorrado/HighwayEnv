@@ -26,7 +26,7 @@ class IntersectionEnv(AbstractEnv):
         config.update({
             "observation": {
                 "type": "Kinematics",
-                "vehicles_count": 8,
+                "vehicles_count": 15,
                 "features": ["presence", "x", "y", "vx", "vy", "cos_h", "sin_h"],
                 "features_range": {
                     "x": [-100, 100],
@@ -35,65 +35,39 @@ class IntersectionEnv(AbstractEnv):
                     "vy": [-20, 20],
                 },
                 "absolute": True,
-                "flatten": False,
+                "flatten": True,
                 "observe_intentions": False
             },
             "action": {
-                "type": "ContinuousAction",
-                # "speed_range": [25,40],
-                # "steering_range": [-np.pi / 16, np.pi / 16],
+                "type": "DiscreteMetaAction",
                 "longitudinal": True,
                 "lateral": False,
+                "target_speeds": [0, 4.5, 9]
             },
+            "action": {
+                "type": "ContinuousAction",
+                "longitudinal": True,
+                "lateral": True,
+                "target_speeds": [0, 4.5, 9]
+            },
+
             "duration": 13,  # [s]
             "destination": "o1",
             "controlled_vehicles": 1,
-            "initial_vehicle_count": 5,
+            "initial_vehicle_count": 10,
             "spawn_probability": 0.6,
             "screen_width": 600,
             "screen_height": 600,
             "centering_position": [0.5, 0.6],
             "scaling": 5.5 * 1.3,
             "collision_reward": -5,
-            "high_speed_reward": 0.2,
+            "high_speed_reward": 1,
             "arrived_reward": 1,
             "reward_speed_range": [7.0, 9.0],
             "normalize_reward": False,
-            "offroad_terminal": True
+            "offroad_terminal": False
         })
         return config
-
-    def set_state(self, obs) -> None:
-        n = len(self.road.vehicles)
-        # obs = obs.reshape(n,-1)
-
-        # y = utils.lmap(obs[0, 2], [0, +1], self.observation_type.features_range['y'])
-        # y = -2
-        y_old = self.controlled_vehicles[0].position[1]
-
-        # x = utils.lmap(obs[0, 1], [-1, 1], [self.features_range["x"][0], self.features_range["x"][1]])
-        # y = utils.lmap(obs[0, 2], [-1, 1], [self.features_range["y"][0], self.features_range["y"][1]])
-
-        new_y = obs[0,2]*100
-        # self.controlled_vehicles[0].position[0] = x
-        self.controlled_vehicles[0].position[1] = new_y
-
-        # for i in range(1, n):
-        #     vehicle = self.road.vehicles[i]
-            # vehicle = self.road.vehicles[i]
-            # vehicle.position[1] = - y + y_old
-
-        # origin = self.controlled_vehicles[0].position
-        # self.controlled_vehicles[0].position[1] = -10
-        # x 5.25
-        # y 1.92
-        # self.road.vehicles[1].position[0] = origin[0] + np.random.uniform(4.2, 5.2)
-        # self.road.vehicles[1].position[1] = np.random.uniform(-1.92, 1.92)
-
-
-        # for v in self.road.vehicles:
-        #     print(v.to_dict(self.controlled_vehicles[0]))
-
 
     def _reward(self, action: int) -> float:
         """Aggregated reward, for cooperative agents."""

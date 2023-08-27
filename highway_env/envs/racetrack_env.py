@@ -27,12 +27,16 @@ class RacetrackEnv(AbstractEnv):
         config = super().default_config()
         config.update({
             "observation": {
-                "type": "OccupancyGrid",
-                "features": ['presence', 'on_road'],
-                "grid_size": [[-18, 18], [-18, 18]],
-                "grid_step": [3, 3],
-                "as_image": False,
-                "align_to_vehicle_axes": True
+                # "type": "OccupancyGrid",
+                # "features": ['presence', 'on_road'],
+                # "grid_size": [[-18, 18], [-18, 18]],
+                # "grid_step": [3, 3],
+                # "as_image": False,
+                # "align_to_vehicle_axes": True,
+                "type": "Kinematics",
+                "features": ["presence", "x", "y"],
+                # "vehicles_count": 8,
+                'absolute': True,
             },
             "action": {
                 "type": "ContinuousAction",
@@ -52,6 +56,7 @@ class RacetrackEnv(AbstractEnv):
             "screen_width": 600,
             "screen_height": 600,
             "centering_position": [0.5, 0.5],
+            "offroad_terminal": True
         })
         return config
 
@@ -72,7 +77,7 @@ class RacetrackEnv(AbstractEnv):
         }
 
     def _is_terminated(self) -> bool:
-        return self.vehicle.crashed
+        return self.vehicle.crashed or (self.config["offroad_terminal"] and not self.vehicle.on_road)
 
     def _is_truncated(self) -> bool:
         return self.time >= self.config["duration"]

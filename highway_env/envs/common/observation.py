@@ -110,7 +110,7 @@ class TimeToCollisionObservation(ObservationType):
 
     def space(self) -> spaces.Space:
         try:
-            return spaces.Box(shape=self.observe().shape, low=0, high=1, dtype=np.float32)
+            return spaces.Box(shape=self.observe().flatten().shape, low=0, high=1, dtype=np.float32)
         except AttributeError:
             return spaces.Space()
 
@@ -283,11 +283,13 @@ class OccupancyGridObservation(ObservationType):
         self.clip = clip
         self.as_image = as_image
 
+        self.observation_shape = (len(self.features) * grid_shape[0] * grid_shape[1],)
+
     def space(self) -> spaces.Space:
         if self.as_image:
-            return spaces.Box(shape=self.grid.shape, low=0, high=255, dtype=np.uint8)
+            return spaces.Box(shape=self.observation_shape, low=0, high=255, dtype=np.uint8)
         else:
-            return spaces.Box(shape=self.grid.shape, low=-np.inf, high=np.inf, dtype=np.float32)
+            return spaces.Box(shape=self.observation_shape, low=-np.inf, high=np.inf, dtype=np.float32)
 
     def normalize(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -347,7 +349,7 @@ class OccupancyGridObservation(ObservationType):
 
             obs = np.nan_to_num(obs).astype(self.space().dtype)
 
-            return obs
+            return obs.flatten()
 
     def pos_to_index(self, position: Vector, relative: bool = False) -> Tuple[int, int]:
         """
