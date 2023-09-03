@@ -422,12 +422,29 @@ class AbstractEnv(gym.Env):
         return result
 
     def set_state(self, obs) -> None:
+        '''
+        Currently, this only changes the position of the agent.
+
+        :param obs: 
+        :return:
+        '''
         n = len(self.road.vehicles)
-        obs = obs.reshape(n,-1)
+
+        agent = self.controlled_vehicles[0]
+
+        if isinstance(obs, dict):
+            agent.position[:2] = obs["observation"][:2]
+        else:
+            agent.position[:2] = obs[:2]
+
+        # loop over uncontrolled vehicles
+        # for i in range(1, n):
+        #     vehicle = self.road.vehicles[i]
 
         # y = utils.lmap(obs[0, 2], [0, +1], self.observation_type.features_range['y'])
         # y = -2
-        y_old = self.controlled_vehicles[0].position[1]
+
+        # self.goal = Landmark(self.road, lane.position(lane.length/2, 0), heading=lane.heading)
 
         # x = utils.lmap(obs[0, 1], [-1, 1], [self.features_range["x"][0], self.features_range["x"][1]])
         # y = utils.lmap(obs[0, 2], [-1, 1], [self.features_range["y"][0], self.features_range["y"][1]])
@@ -435,8 +452,7 @@ class AbstractEnv(gym.Env):
         # self.controlled_vehicles[0].position[0] = x
         # self.controlled_vehicles[0].position[1] = y
 
-        for i in range(1, n):
-            vehicle = self.road.vehicles[i]
+
             # vehicle = self.road.vehicles[i]
             # vehicle.position[1] = - y + y_old
 
