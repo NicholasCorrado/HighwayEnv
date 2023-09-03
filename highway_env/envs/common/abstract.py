@@ -434,11 +434,11 @@ class AbstractEnv(gym.Env):
 
         if isinstance(obs, dict):
             agent.position[:2] = obs["observation"][:2]
-            agent.heading = np.arctan2(obs["observation"][4], obs["observation"][3])
+            agent.heading = np.arctan2(obs["observation"][5], obs["observation"][4])
 
         else:
             agent.position[:2] = obs[:2]
-            agent.heading = np.arctan2(obs[4], obs[3])
+            agent.heading = np.arctan2(obs[5], obs[4])
 
 
         # loop over uncontrolled vehicles
