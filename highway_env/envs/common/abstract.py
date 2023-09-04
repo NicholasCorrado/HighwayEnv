@@ -434,10 +434,12 @@ class AbstractEnv(gym.Env):
 
         if isinstance(obs, dict):
             agent.position[:2] = obs["observation"][:2]
+            agent.velocity[:2] = obs["observation"][2:4]
             agent.heading = np.arctan2(obs["observation"][5], obs["observation"][4])
 
         else:
             agent.position[:2] = obs[:2]
+            agent.velocity[:2] = obs[2:4]
             agent.heading = np.arctan2(obs[5], obs[4])
 
 
