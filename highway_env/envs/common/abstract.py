@@ -433,15 +433,15 @@ class AbstractEnv(gym.Env):
         agent = self.controlled_vehicles[0]
 
         if isinstance(obs, dict):
-            obs["observation"][:2] *= 100
-            obs["observation"][2:4] *= 5
+            # obs["observation"][:2] *= 100
+            # obs["observation"][2:4] *= 5
             agent.position[:2] = obs["observation"][:2]
             agent.velocity[:2] = obs["observation"][2:4]
             agent.heading = np.arctan2(obs["observation"][5], obs["observation"][4])
 
         else:
-            obs[:2] *= 100
-            obs[2:4] *= 5
+            # obs[:2] *= 100
+            # obs[2:4] *= 5
             agent.position[:2] = obs[:2]
             agent.velocity[:2] = obs[2:4]
             agent.heading = np.arctan2(obs[5], obs[4])
