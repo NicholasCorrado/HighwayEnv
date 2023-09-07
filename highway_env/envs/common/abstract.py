@@ -432,19 +432,27 @@ class AbstractEnv(gym.Env):
 
         agent = self.controlled_vehicles[0]
 
+        scaled_obs = obs.copy()
         if isinstance(obs, dict):
-            # obs["observation"][:2] *= 100
-            # obs["observation"][2:4] *= 5
-            agent.position[:2] = obs["observation"][:2]
-            agent.velocity[:2] = obs["observation"][2:4]
-            agent.heading = np.arctan2(obs["observation"][5], obs["observation"][4])
+            scaled_obs["observation"][:2] *= 100
+            scaled_obs["observation"][2:4] *= 5
+            scaled_obs["desired_goal"][6:8] *= 100
+            agent.position[:2] = scaled_obs["observation"][:2]
+            agent.velocity[:2] = scaled_obs["observation"][2:4]
+            agent.heading = np.arctan2(scaled_obs["observation"][5], scaled_obs["observation"][4])
+            self.goal.position[:2] = scaled_obs["desired_goal"][:2]
 
         else:
-            # obs[:2] *= 100
-            # obs[2:4] *= 5
-            agent.position[:2] = obs[:2]
-            agent.velocity[:2] = obs[2:4]
-            agent.heading = np.arctan2(obs[5], obs[4])
+            scaled_obs[:2] *= 100
+            scaled_obs[2:4] *= 5
+            scaled_obs[6:8] *= 100
+            agent.position[:2] = scaled_obs[:2]
+            agent.velocity[:2] = scaled_obs[2:4]
+            agent.heading = np.arctan2(scaled_obs[5], scaled_obs[4])
+
+            self.goal.position[:2] = scaled_obs[6:8]
+            # self.goal.heading[:2] = obs[6:8]
+
 
 
         # loop over uncontrolled vehicles

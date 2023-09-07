@@ -93,7 +93,7 @@ class ParkingEnv(AbstractEnv, GoalEnv):
             "steering_range": np.deg2rad(45),
             "simulation_frequency": 15,
             "policy_frequency": 5,
-            "duration": 100,
+            "duration": 10,
             "screen_width": 600,
             "screen_height": 300,
             "centering_position": [0.5, 0.5],
@@ -225,6 +225,11 @@ class ParkingEnv(AbstractEnv, GoalEnv):
         """The episode is truncated if the time is over."""
         return self.time >= self.config["duration"]
 
+    def get_normalized_score(self, eval_score):
+        random_score = -23.3
+        expert_score = -7.2
+
+        return (eval_score - random_score)/(expert_score - random_score)
 
 class ParkingEnvActionRepeat(ParkingEnv):
     def __init__(self):
